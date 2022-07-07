@@ -182,7 +182,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	}
 
 	public static void showExplanation() {
-		//For the lulz
+		//For the lulz because why not
 		if (cardA.equals(cardB)) {
 			labelResultExplanation2.setText("They are the same, lol.");
 		}
