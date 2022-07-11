@@ -9,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 
 
@@ -37,6 +40,9 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	private JSeparator separator;
 	private static JLabel labelResultExplanation2;
 	private static JLabel labelResultExplanation3;
+	private static JButton btnHelp;
+	private static Rock_Paper_Scissors_but_Operators_Game frame = new Rock_Paper_Scissors_but_Operators_Game();
+	private static OperatorTable oTableFrame = new OperatorTable();
 	
 	
 
@@ -47,7 +53,6 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Rock_Paper_Scissors_but_Operators_Game frame = new Rock_Paper_Scissors_but_Operators_Game();
 					frame.setVisible(true);	
 					
 					createARound();
@@ -62,6 +67,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	 * Create the frame.
 	 */
 	public Rock_Paper_Scissors_but_Operators_Game() {
+		setResizable(false);
 		
 		setTitle("Rock-Paper-Scissors but Operators");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +115,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		btnEqual = new JButton("Equal");
 		btnEqual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				if  (cardA.getValue() == cardB.getValue() || cardA.getType().equals(cardB.getType())) {
+				if  (cardA.getValue() == cardB.getValue()) { // || cardA.getType().equals(cardB.getType())) {
 					labelAnswerResult.setText("Correct!");
 				} else {
 					labelAnswerResult.setText("Wrong!");
@@ -159,7 +165,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 				deleteAnswerAndExplanation();
 			}
 		});
-		btnDraw2Cards.setBounds(55, 11, 149, 23);
+		btnDraw2Cards.setBounds(64, 11, 131, 23);
 		contentPane.add(btnDraw2Cards);
 		
 		labelResultExplanation2 = new JLabel("");
@@ -171,6 +177,15 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		labelResultExplanation3.setHorizontalAlignment(SwingConstants.CENTER);
 		labelResultExplanation3.setBounds(10, 172, 364, 14);
 		contentPane.add(labelResultExplanation3);
+		
+		btnHelp = new JButton("?");
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openOperatorInfoTableWindow();
+			}
+		});
+		btnHelp.setBounds(10, 11, 44, 23);
+		contentPane.add(btnHelp);
 	}
 	
 	public static void createARound() {
@@ -182,7 +197,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	}
 
 	public static void showExplanation() {
-		//For the lulz because why not
+		//For the lulz
 		if (cardA.equals(cardB)) {
 			labelResultExplanation2.setText("They are the same, lol.");
 		}
@@ -208,7 +223,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 			labelResultExplanation2.setText("beats");
 			labelResultExplanation3.setText(cardA.getType() + " [ " +  cardA.getOperator()+ " ]");
 		}
-		else if (cardA.getValue() == cardB.getValue() || cardA.getType().equals(cardB.getType())) {
+		else if (cardA.getValue() == cardB.getValue()) { // || cardA.getType().equals(cardB.getType())) {
 			labelResultExplanation1.setText(cardA.getType() + " [ " + cardA.getOperator() + " ]");
 			labelResultExplanation2.setText("is equal to");
 			labelResultExplanation3.setText(cardB.getType() + " [ " + cardB.getOperator() + " ]");
@@ -234,4 +249,42 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		btnNo.setEnabled(false);
 	}
 	
+	public static void openOperatorInfoTableWindow() {
+		int tempX = frame.getX();
+		int tempY = frame.getY();
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int screenWidth = gd.getDisplayMode().getWidth();
+		int screenHeight = gd.getDisplayMode().getHeight();
+		
+		//Top right corner ^^^>>>
+		if (tempY < 50 & tempX > (screenWidth - 500)){
+			oTableFrame.setLocation(tempX - 500, tempY);
+		} 
+		//Bottom right corner vvv>>>
+		else if (tempY < 50 & tempX > (screenWidth - 600)){
+			oTableFrame.setLocation(tempX - 500, tempY - 150);
+		}
+		//Top screen border ^^^
+		else if (tempY < 50) { 
+			oTableFrame.setLocation(tempX + 450, tempY);
+		} 
+		//Right screen border >>>
+		else if (tempX > (screenWidth - 600)){
+			oTableFrame.setLocation(tempX - 500, tempY - 50);
+		} 
+		//Bottom screen border vvv
+		else if (tempX > (screenHeight - 300)){
+			oTableFrame.setLocation(tempX + 450, tempY - 150);
+		}  
+		//set it right to game window
+		else {
+			oTableFrame.setLocation(tempX + 450, tempY - 50);
+		}
+		oTableFrame.setVisible(true);
+		
+		
+	}
 }
+
+
+
