@@ -43,7 +43,9 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	private static JButton btnHelp;
 	private static Rock_Paper_Scissors_but_Operators_Game frame = new Rock_Paper_Scissors_but_Operators_Game();
 	private static OperatorTable oTableFrame = new OperatorTable();
-	
+	private JSeparator separator_1;
+	private JLabel labelWinStreak;
+	private int winStreak = 0;
 	
 
 	/**
@@ -71,7 +73,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		
 		setTitle("Rock-Paper-Scissors but Operators");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 240);
+		setBounds(100, 100, 400, 260);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -80,13 +82,13 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		
 		labelBeats = new JLabel("beats");
 		labelBeats.setHorizontalAlignment(SwingConstants.CENTER);
-		labelBeats.setBounds(109, 65, 36, 14);
+		labelBeats.setBounds(109, 91, 36, 14);
 		contentPane.add(labelBeats);
 		
 		tfOperatorA = new JTextField();
 		tfOperatorA.setHorizontalAlignment(SwingConstants.CENTER);
 		tfOperatorA.setEditable(false);
-		tfOperatorA.setBounds(55, 62, 44, 20);
+		tfOperatorA.setBounds(55, 88, 44, 20);
 		contentPane.add(tfOperatorA);
 		tfOperatorA.setColumns(10);
 		
@@ -94,7 +96,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		tfOperatorB.setHorizontalAlignment(SwingConstants.CENTER);
 		tfOperatorB.setEditable(false);
 		tfOperatorB.setColumns(10);
-		tfOperatorB.setBounds(155, 62, 49, 20);
+		tfOperatorB.setBounds(155, 88, 49, 20);
 		contentPane.add(tfOperatorB);
 		
 		btnYes = new JButton("Yes");
@@ -109,7 +111,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 				turnAnswerButtonsOff();
 			}
 		});
-		btnYes.setBounds(252, 27, 89, 23);
+		btnYes.setBounds(252, 53, 89, 23);
 		contentPane.add(btnYes);
 		
 		btnEqual = new JButton("Equal");
@@ -124,7 +126,7 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 				turnAnswerButtonsOff();
 			}
 		});
-		btnEqual.setBounds(252, 61, 89, 23);
+		btnEqual.setBounds(252, 87, 89, 23);
 		contentPane.add(btnEqual);
 		
 		btnNo = new JButton("No");
@@ -139,22 +141,22 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 				turnAnswerButtonsOff();
 			}
 		});
-		btnNo.setBounds(252, 95, 89, 23);
+		btnNo.setBounds(252, 121, 89, 23);
 		contentPane.add(btnNo);
 		
 		separator = new JSeparator();
-		separator.setBounds(10, 129, 364, 8);
+		separator.setBounds(10, 155, 364, 8);
 		contentPane.add(separator);
 		
 		labelAnswerResult = new JLabel("");
 		labelAnswerResult.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelAnswerResult.setHorizontalAlignment(SwingConstants.CENTER);
-		labelAnswerResult.setBounds(55, 98, 149, 20);
+		labelAnswerResult.setBounds(55, 124, 149, 20);
 		contentPane.add(labelAnswerResult);
 		
 		labelResultExplanation1 = new JLabel("");
 		labelResultExplanation1.setHorizontalAlignment(SwingConstants.CENTER);
-		labelResultExplanation1.setBounds(10, 139, 364, 14);
+		labelResultExplanation1.setBounds(10, 165, 364, 14);
 		contentPane.add(labelResultExplanation1);
 		
 		btnDraw2Cards = new JButton("Draw 2 Cards");
@@ -170,12 +172,12 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		
 		labelResultExplanation2 = new JLabel("");
 		labelResultExplanation2.setHorizontalAlignment(SwingConstants.CENTER);
-		labelResultExplanation2.setBounds(10, 156, 364, 14);
+		labelResultExplanation2.setBounds(10, 182, 364, 14);
 		contentPane.add(labelResultExplanation2);
 		
 		labelResultExplanation3 = new JLabel("");
 		labelResultExplanation3.setHorizontalAlignment(SwingConstants.CENTER);
-		labelResultExplanation3.setBounds(10, 172, 364, 14);
+		labelResultExplanation3.setBounds(10, 198, 364, 14);
 		contentPane.add(labelResultExplanation3);
 		
 		btnHelp = new JButton("?");
@@ -186,6 +188,15 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 		});
 		btnHelp.setBounds(10, 11, 44, 23);
 		contentPane.add(btnHelp);
+		
+		separator_1 = new JSeparator();
+		separator_1.setBounds(10, 42, 364, 8);
+		contentPane.add(separator_1);
+		
+		labelWinStreak = new JLabel("");
+		labelWinStreak.setHorizontalAlignment(SwingConstants.CENTER);
+		labelWinStreak.setBounds(215, 15, 159, 14);
+		contentPane.add(labelWinStreak);
 	}
 	
 	public static void createARound() {
@@ -197,6 +208,8 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 	}
 
 	public static void showExplanation() {
+		showWinStreak();
+		
 		//For the lulz
 		if (cardA.equals(cardB)) {
 			labelResultExplanation2.setText("They are the same, lol.");
@@ -281,10 +294,24 @@ public class Rock_Paper_Scissors_but_Operators_Game extends JFrame {
 			oTableFrame.setLocation(tempX + 450, tempY - 50);
 		}
 		oTableFrame.setVisible(true);
-		
-		
 	}
-}
+	
+	//	Requested by my coach
+	//	Decided to use non-static members as practice :^)
+	public static void showWinStreak() {
+		
+		if(labelAnswerResult.getText().equals("Correct!")) {
+			frame.winStreak++;
+			frame.labelWinStreak.setText("Win streak: " + frame.winStreak);
+		} else {
+			frame.winStreak = 0;
+			if (!frame.labelWinStreak.getText().isEmpty()) {
+				frame.labelWinStreak.setText(":(");
+			}
+		}
+	}
+	
+} //class end
 
 
 
